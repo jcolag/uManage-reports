@@ -32,3 +32,9 @@ summary(activity)
 setkey(activity, start)
 setkey(weather, Year.Month.Day)
 
+# Some basic plotting regarding how long I'm using programs in general.
+plot(sort(activity[[4]]))
+plot(sort(log(activity[[4]])))
+
+# Don't forget that the long items may be mostly idle.
+plot(sort(log(activity[[4]] - activity[[5]])))
