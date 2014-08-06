@@ -23,10 +23,21 @@ activity <- dbGetQuery(dbFile, "select * from activity")
 activity <- as.data.table(activity)
 weather <- dbGetQuery(dbFile, "select * from weather")
 weather <- as.data.table(weather)
+pauses <- dbGetQuery(dbFile, "select * from pauses")
+pauses <- as.data.table(pauses)
+keepalives <- dbGetQuery(dbFile, "select * from keepalives")
+keepalives <- as.data.table(keepalives)
+
+# And the table added to from TypeTime
+reaction <- dbGetQuery(dbFile, "select * from reaction")
+reaction <- as.data.table(reaction)
 
 # What do we have?
 summary(weather)
 summary(activity)
+summary(pauses)
+summary(keepalives)
+summary(reaction)
 
 # Some basic plotting regarding how long I'm using programs in general.
 plot(sort(activity[[4]]))
