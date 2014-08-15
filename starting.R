@@ -46,12 +46,22 @@ plot(sort(log(activity[[4]])))
 # Don't forget that the long items may be mostly idle.
 plot(sort(log(activity[[4]] - activity[[5]])))
 
+# A histogram might give us a rough idea of attention span.
+# (Looks like around 2-10 minutes.)
+hist(log(activity[[4]]))
+hist(log(abs(activity[[4]] - activity[[5]])))
+
 # Add the date, to make the data comparable to daily data
 activity$date <- substring(activity[[1]], 1, 10)
+pauses$date <- substring(pauses[[1]], 1, 10)
+keepalives$date <- substring(keepalives[[1]], 1, 10)
 
 # Set the dates as keys, probably needs more work
 setkey(activity, date)
-setkey(weather, Year.Month.Day)
+setkey(pauses, date)
+setkey(keepalives, date)
+setkey(weather, date)
+setkey(reaction, date)
 
 # Make sure we have our bearings
 ls()
@@ -61,4 +71,10 @@ act_wx <- activity[weather]
 wx_act <- weather[activity]
 summary(act_wx)
 summary(wx_act)
+
+# Right now, the only pauses I have logged are of one sort
+plot(strptime(pauses[[2]],format="%Y-%m-%dT%T") - strptime(pauses[[1]],format="%Y-%m-%dT%T"))
+# But we can also filter the table based on the reason
+exercise <- pauses[reason == "Exercise"]
+plot(strptime(exercise[[2]],format="%Y-%m-%dT%T") - strptime(exercise[[1]],format="%Y-%m-%dT%T"))
 
